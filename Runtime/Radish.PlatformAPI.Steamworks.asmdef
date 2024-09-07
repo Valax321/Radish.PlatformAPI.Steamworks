@@ -1,0 +1,33 @@
+{
+    "name": "Radish.PlatformAPI.Steamworks",
+    "rootNamespace": "Radish.PlatformAPI.Steamworks",
+    "references": [
+        "GUID:c0acb78a74db740df91db04185d5ead8",
+        "GUID:8bdea64740185594d97902a78bd70061"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "LinuxStandalone64Server",
+        "CloudRendering",
+        "macOSStandalone",
+        "macOSStandaloneServer",
+        "WindowsStandalone32",
+        "WindowsStandalone64",
+        "WindowsStandalone32Server",
+        "WindowsStandalone64Server"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Facepunch.Steamworks.Posix.dll",
+        "Facepunch.Steamworks.Win64.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "RADISH_ENABLE_STEAMWORKS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
