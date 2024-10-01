@@ -8,14 +8,10 @@
     "includePlatforms": [
         "Editor",
         "LinuxStandalone64",
-        "LinuxStandalone64Server",
         "CloudRendering",
         "macOSStandalone",
-        "macOSStandaloneServer",
         "WindowsStandalone32",
-        "WindowsStandalone64",
-        "WindowsStandalone32Server",
-        "WindowsStandalone64Server"
+        "WindowsStandalone64"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
