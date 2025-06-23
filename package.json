@@ -16,6 +16,6 @@
   "license": "MIT",
   "category": "Editor",
   "dependencies": {
-    "com.radish.common-tools": "4.0.0"
+    "com.radish.platform-api": "1.0.0"
   }
 }
