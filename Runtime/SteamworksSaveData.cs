@@ -45,14 +45,14 @@ namespace Radish.PlatformAPI.Steamworks
             return m_FileIO.GetUserDataNames();
         }
 
-        public void BeginUserDataWrite()
+        public bool BeginUserDataWrite()
         {
-            
+            return SteamRemoteStorage.BeginFileWriteBatch();
         }
 
-        public void EndUserDataWrite()
+        public bool EndUserDataWrite()
         {
-            throw new NotImplementedException();
+            return SteamRemoteStorage.EndFileWriteBatch();
         }
 
         public Stream OpenUserDataStream(string name, IPlatformSaveData.OpenMode mode)

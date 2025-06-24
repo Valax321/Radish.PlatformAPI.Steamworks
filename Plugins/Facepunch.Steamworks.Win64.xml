@@ -2438,6 +2438,21 @@
             Class for utilizing the Steam Remote Storage API.
             </summary>
         </member>
+        <member name="M:Steamworks.SteamRemoteStorage.BeginFileWriteBatch">
+            <summary>
+            Use this along with <see cref="M:Steamworks.SteamRemoteStorage.EndFileWriteBatch"/> to wrap a set of local file writes/deletes
+            that should be considered part of one single state change.
+            For example, if saving game progress requires updating both savegame1.dat and maxprogress.dat,
+            wrap those operations with calls to BeginFileWriteBatch and EndFileWriteBatch.
+            </summary>
+            <returns>True if the write batch was begun, false if there was a batch already in progress.</returns>
+        </member>
+        <member name="M:Steamworks.SteamRemoteStorage.EndFileWriteBatch">
+            <summary>
+            Use this along with <see cref="M:Steamworks.SteamRemoteStorage.BeginFileWriteBatch"/> - see that documentation for more details.
+            </summary>
+            <returns>True if the write batch was ended, false if there was no batch already in progress.</returns>
+        </member>
         <member name="M:Steamworks.SteamRemoteStorage.FileWrite(System.String,System.Byte[])">
             <summary>
             Creates a new file, writes the bytes to the file, and then closes the file.
