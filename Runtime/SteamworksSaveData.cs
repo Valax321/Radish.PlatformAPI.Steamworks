@@ -9,7 +9,7 @@ namespace Radish.PlatformAPI.Steamworks
     {
         public bool isSupported => SteamClient.IsValid;
 
-        public event IPlatformSaveData.SaveDataDynamicChangeDelegate onSaveDataChanged;
+        public event IPlatformSaveData.SaveDataDynamicChangeDelegate OnSaveDataChanged;
 
         public SteamworksSaveData()
         {
@@ -36,7 +36,7 @@ namespace Radish.PlatformAPI.Steamworks
                 }));
             }
             
-            onSaveDataChanged?.Invoke(changes);
+            OnSaveDataChanged?.Invoke(changes);
         }
 
         public bool BeginDataWrite()
