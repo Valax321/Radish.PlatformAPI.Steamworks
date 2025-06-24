@@ -1,61 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Radish.PlatformAPI.DefaultAPIs;
 using Steamworks;
-using UnityEngine;
 
 namespace Radish.PlatformAPI.Steamworks
 {
     internal sealed class SteamworksSaveData : IPlatformSaveData
     {
         public bool isSupported => SteamClient.IsValid;
-
-        private readonly ulong m_SteamUserId;
-        private readonly PlatformSaveDataImplFileIO m_FileIO;
-
-        public SteamworksSaveData()
-        {
-            m_FileIO = new PlatformSaveDataImplFileIO(Application.persistentDataPath, "local",
-                m_SteamUserId.ToString());
-
-            if (!SteamClient.IsValid)
-                return;
-            
-            m_SteamUserId = SteamClient.SteamId.Value;
-        }
-
-        public Stream OpenLocalDataStream(string name, IPlatformSaveData.OpenMode mode)
-        {
-            return m_FileIO.OpenUserDataStream(name, mode);
-        }
-
-        public bool DoesLocalDataExist(string name)
-        {
-            return m_FileIO.DoesUserDataExist(name);
-        }
-
-        public void DeleteLocalData(string name)
-        {
-            m_FileIO.DeleteUserData(name);
-        }
-
-        public IEnumerable<string> GetLocalDataNames()
-        {
-            return m_FileIO.GetUserDataNames();
-        }
-
-        public bool BeginUserDataWrite()
+        
+        public bool BeginDataWrite()
         {
             return SteamRemoteStorage.BeginFileWriteBatch();
         }
 
-        public bool EndUserDataWrite()
+        public bool EndDataWrite()
         {
             return SteamRemoteStorage.EndFileWriteBatch();
         }
 
-        public Stream OpenUserDataStream(string name, IPlatformSaveData.OpenMode mode)
+        public Stream OpenDataStream(string name, IPlatformSaveData.OpenMode mode)
         {
             if (!isSupported)
                 return null;
@@ -82,7 +46,7 @@ namespace Radish.PlatformAPI.Steamworks
             return stream;
         }
 
-        public bool DoesUserDataExist(string name)
+        public bool DoesDataExist(string name)
         {
             if (!isSupported)
                 return false;
@@ -90,7 +54,7 @@ namespace Radish.PlatformAPI.Steamworks
             return SteamRemoteStorage.FileExists(name);
         }
 
-        public void DeleteUserData(string name)
+        public void DeleteData(string name)
         {
             if (!isSupported)
                 return;
@@ -98,7 +62,7 @@ namespace Radish.PlatformAPI.Steamworks
             SteamRemoteStorage.FileDelete(name);
         }
 
-        public IEnumerable<string> GetUserDataNames()
+        public IEnumerable<string> GetDataNames()
         {
             if (!isSupported)
                 return Array.Empty<string>();

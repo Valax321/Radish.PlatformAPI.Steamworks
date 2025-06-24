@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Radish.Logging;
+using Radish.PlatformAPI.DefaultAPIs;
 using Steamworks;
 using UnityEngine;
 using ILogger = Radish.Logging.ILogger;
@@ -14,9 +15,12 @@ namespace Radish.PlatformAPI.Steamworks
         
         public string name => nameof(SteamworksPlatformSubsystem);
 
-        public IPlatformSaveData saveData { get; private set; }
-
-        public IPlatformUserInfo userInfo { get; private set; }
+        public IPlatformSaveData userData { get; } = new SteamworksSaveData();
+        
+        public IPlatformSaveData localData { get; } =
+            new PlatformSaveDataImplFileIO(Application.persistentDataPath, "local");
+        
+        public IPlatformUserInfo userInfo { get; } = new SteamworksUserInfo();
 
         private readonly AppId m_AppId;
         private readonly bool m_RestartIfNecessary;
@@ -43,9 +47,6 @@ namespace Radish.PlatformAPI.Steamworks
             {
                 Logger.Error("Failed to initialize steam client: {0}", ex.Message);
             }
-            
-            saveData = new SteamworksSaveData();
-            userInfo = new SteamworksUserInfo();
             
             return true;
         }
