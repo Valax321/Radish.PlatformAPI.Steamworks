@@ -2438,6 +2438,11 @@
             Class for utilizing the Steam Remote Storage API.
             </summary>
         </member>
+        <member name="E:Steamworks.SteamRemoteStorage.OnLocalFileChange">
+            <summary>
+            If a Steam app is flagged for supporting dynamic Steam Cloud sync, and a sync occurs, this callback will be posted to the app if any local files changed.
+            </summary>
+        </member>
         <member name="M:Steamworks.SteamRemoteStorage.BeginFileWriteBatch">
             <summary>
             Use this along with <see cref="M:Steamworks.SteamRemoteStorage.EndFileWriteBatch"/> to wrap a set of local file writes/deletes
@@ -2552,6 +2557,21 @@
             <summary>
             Gets a list of filenames synchronized by Steam Cloud.
             </summary>
+        </member>
+        <member name="M:Steamworks.SteamRemoteStorage.GetLocalFileChangeCount">
+            <summary>
+            When your application receives <see cref="E:Steamworks.SteamRemoteStorage.OnLocalFileChange"/>, use this method to get the number of changes (file updates and file deletes) that have been made. You can then iterate the changes using <see cref="M:Steamworks.SteamRemoteStorage.GetLocalFileChange(System.Int32,Steamworks.RemoteStorageLocalFileChange@,Steamworks.RemoteStorageFilePathType@)"/>.
+            </summary>
+            <returns>The number of local file changes that have occurred.</returns>
+        </member>
+        <member name="M:Steamworks.SteamRemoteStorage.GetLocalFileChange(System.Int32,Steamworks.RemoteStorageLocalFileChange@,Steamworks.RemoteStorageFilePathType@)">
+            <summary>
+            After calling <see cref="M:Steamworks.SteamRemoteStorage.GetLocalFileChangeCount"/>, use this method to iterate over the changes. The changes described have already been made to local files. Your application should take appropriate action to reload state from disk, and possibly notify the user. 
+            </summary>
+            <param name="changedFileIndex">Zero-based index of the change.</param>
+            <param name="change">What happened to this file.</param>
+            <param name="type">Type of path to the file returned.</param>
+            <returns>The file name or full path of the file affected by this change.</returns>
         </member>
         <member name="T:Steamworks.SteamScreenshots">
             <summary>
