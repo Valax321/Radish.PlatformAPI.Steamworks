@@ -8,7 +8,6 @@
     "includePlatforms": [
         "Editor",
         "LinuxStandalone64",
-        "CloudRendering",
         "macOSStandalone",
         "WindowsStandalone32",
         "WindowsStandalone64"
@@ -21,9 +20,7 @@
         "Facepunch.Steamworks.Win64.dll"
     ],
     "autoReferenced": true,
-    "defineConstraints": [
-        "RADISH_ENABLE_STEAMWORKS"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }
