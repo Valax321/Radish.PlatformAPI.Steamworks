@@ -7,15 +7,22 @@ using UnityEngine;
 
 namespace Radish.PlatformAPI.Steamworks
 {
-    internal sealed class SteamworksSaveDataImpl : IPlatformSaveData
+    internal sealed class SteamworksSaveData : IPlatformSaveData
     {
-        private readonly ulong m_SteamUserId = SteamClient.SteamId.Value;
+        public bool isSupported => SteamClient.IsValid;
+
+        private readonly ulong m_SteamUserId;
         private readonly PlatformSaveDataImplFileIO m_FileIO;
 
-        public SteamworksSaveDataImpl()
+        public SteamworksSaveData()
         {
-            m_FileIO = new PlatformSaveDataImplFileIO(Application.persistentDataPath, "system",
+            m_FileIO = new PlatformSaveDataImplFileIO(Application.persistentDataPath, "local",
                 m_SteamUserId.ToString());
+
+            if (!SteamClient.IsValid)
+                return;
+            
+            m_SteamUserId = SteamClient.SteamId.Value;
         }
 
         public Stream OpenLocalDataStream(string name, IPlatformSaveData.OpenMode mode)
@@ -38,8 +45,21 @@ namespace Radish.PlatformAPI.Steamworks
             return m_FileIO.GetUserDataNames();
         }
 
+        public void BeginUserDataWrite()
+        {
+            
+        }
+
+        public void EndUserDataWrite()
+        {
+            throw new NotImplementedException();
+        }
+
         public Stream OpenUserDataStream(string name, IPlatformSaveData.OpenMode mode)
         {
+            if (!isSupported)
+                return null;
+            
             var stream = new MemoryStreamWithCloseCallback();
             if (mode.HasFlagT(IPlatformSaveData.OpenMode.Read) && SteamRemoteStorage.FileExists(name))
             {
@@ -64,16 +84,25 @@ namespace Radish.PlatformAPI.Steamworks
 
         public bool DoesUserDataExist(string name)
         {
+            if (!isSupported)
+                return false;
+            
             return SteamRemoteStorage.FileExists(name);
         }
 
         public void DeleteUserData(string name)
         {
+            if (!isSupported)
+                return;
+            
             SteamRemoteStorage.FileDelete(name);
         }
 
         public IEnumerable<string> GetUserDataNames()
         {
+            if (!isSupported)
+                return Array.Empty<string>();
+            
             return SteamRemoteStorage.Files;
         }
     }
